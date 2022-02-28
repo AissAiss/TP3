@@ -1,12 +1,25 @@
 package com.example.tp3;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -22,6 +35,21 @@ public class FirstFragment extends Fragment {
     public static String NUM;
     public static String MAIL;
     public static String INTERET;
+
+    private long downloadID;
+
+    // Receveur qui écoute quand le fichier est recus.
+    private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Fetching the download id received with the broadcast
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            //Checking if the received broadcast is for our enqueued download by matching download id
+            if (downloadID == id) {
+                Toast.makeText(getContext(), "Téléchargement fini", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
 
 
@@ -82,6 +110,39 @@ public class FirstFragment extends Fragment {
 
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
+            }
+        });
+
+        binding.btnTelecharger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                } else {
+                    try{
+                        String getUrl = "https://image.gezondheid.be/123-kat-katje-9-8.jpg";
+
+
+                        String title = URLUtil.guessFileName(getUrl, null, null);
+
+                        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(getUrl));
+                        request.setTitle(title);
+                        request.setDescription("Downloading...");
+                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
+
+                        DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+                        downloadID = downloadManager.enqueue(request);
+                    }catch (Exception e){
+                        Log.d("DOWNLOAD", e.toString());
+                    }
+                }
+
+
+
             }
         });
     }
