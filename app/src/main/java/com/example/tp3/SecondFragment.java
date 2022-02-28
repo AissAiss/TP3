@@ -29,11 +29,20 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
+        binding.txtNom.setText(FirstFragment.NOM);
+        binding.txtPrenom.setText(FirstFragment.PRENOM);
+        binding.txtDate.setText(FirstFragment.DATE);
+        binding.txtNum.setText(FirstFragment.NUM);
+        binding.txtMail.setText(FirstFragment.MAIL);
+        binding.txtInteret.setText(FirstFragment.INTERET);
+
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 NavHostFragment.findNavController(SecondFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
+
+
             }
         });
     }
