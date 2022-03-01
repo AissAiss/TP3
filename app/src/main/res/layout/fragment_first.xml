@@ -37,7 +37,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextFirstName"
+                android:id="@+id/editTextPrenom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -63,7 +63,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextLastName"
+                android:id="@+id/editTextNom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -117,7 +117,7 @@
             <EditText
                 android:id="@+id/editTextMail"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textEmailAddress"
@@ -147,7 +147,7 @@
                 android:ems="10"
                 android:inputType="textPersonName|phone"
                 android:minHeight="48dp"
-                android:text="07691499**" />
+                android:text="0769149915" />
 
         </LinearLayout>
 
@@ -180,10 +180,10 @@
                 android:text="Lecture" />
 
             <Switch
-                android:id="@+id/switchSex"
+                android:id="@+id/switch_ski"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sex" />
+                android:text="Ski" />
 
         </LinearLayout>
 

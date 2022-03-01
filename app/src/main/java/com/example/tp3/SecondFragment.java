@@ -93,7 +93,6 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-
                     File file = new File(getContext().getFilesDir(),"saveData.json");
                     FileReader fileReader = new FileReader(file);
                     BufferedReader bufferedReader = new BufferedReader(fileReader);
