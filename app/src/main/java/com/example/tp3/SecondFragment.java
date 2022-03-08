@@ -1,5 +1,6 @@
 package com.example.tp3;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,11 +36,12 @@ public class SecondFragment extends Fragment {
 
         binding = FragmentSecondBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
 
         binding.txtNom.setText(FirstFragment.NOM);
         binding.txtPrenom.setText(FirstFragment.PRENOM);
@@ -93,7 +95,7 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    File file = new File(getContext().getFilesDir(),"saveData.json");
+                    File file = new File(getActivity().getFilesDir(),"saveData.json");
                     FileReader fileReader = new FileReader(file);
                     BufferedReader bufferedReader = new BufferedReader(fileReader);
                     StringBuilder stringBuilder = new StringBuilder();
@@ -121,6 +123,8 @@ public class SecondFragment extends Fragment {
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
+
+
             }
         });
     }

@@ -9,14 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,20 +41,20 @@ public class FirstFragment extends Fragment {
     public static String MAIL;
     public static String INTERET;
 
-    private long downloadID;
+    //private long downloadID;
 
     // Receveur qui écoute quand le fichier est recus.
-    private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //Fetching the download id received with the broadcast
-            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-            //Checking if the received broadcast is for our enqueued download by matching download id
-            if (downloadID == id) {
-                Toast.makeText(context, "Téléchargement fini", Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
+    //private BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+    //    @Override
+    //    public void onReceive(Context context, Intent intent) {
+    //        //Fetching the download id received with the broadcast
+    //        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+    //        //Checking if the received broadcast is for our enqueued download by matching download id
+    //        if (downloadID == id) {
+    //            Toast.makeText(context, "Téléchargement fini", Toast.LENGTH_SHORT).show();
+    //        }
+    //    }
+    //};
 
 
 
@@ -68,7 +65,7 @@ public class FirstFragment extends Fragment {
     ) {
 
         binding = FragmentFirstBinding.inflate(inflater, container, false);
-        requireActivity().registerReceiver(onDownloadComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        //requireActivity().registerReceiver(onDownloadComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         return binding.getRoot();
 
     }
@@ -164,7 +161,6 @@ public class FirstFragment extends Fragment {
                         INTERET += "Lecture";
                     else
                         INTERET += ", Lecture";
-
                 }
 
                 if(binding.switchMusique.isChecked()){
@@ -192,33 +188,14 @@ public class FirstFragment extends Fragment {
         binding.btnTelecharger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
                 if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
                 } else {
-                    try{
-                        String getUrl = "https://image.gezondheid.be/123-kat-katje-9-8.jpg";
-
-
-                        String title = URLUtil.guessFileName(getUrl, null, null);
-
-                        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(getUrl));
-                        request.setTitle(title);
-                        request.setDescription("Downloading...");
-                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
-
-                        DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-                        downloadID = downloadManager.enqueue(request);
-                    }catch (Exception e){
-                        Log.d("DOWNLOAD", e.toString());
-                    }
+                    Intent intent = new Intent(getContext(), ServiceDownload.class);
+                    getActivity().startService(intent);
                 }
-
-
-
             }
         });
     }

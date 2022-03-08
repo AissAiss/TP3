@@ -154,38 +154,55 @@
             android:layout_height="20dp" />
 
         <LinearLayout
-            android:layout_width="270dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|right"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <Switch
-                android:id="@+id/switchSport"
+            <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sport"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:layout_weight="1" />
 
-            <Switch
-                android:id="@+id/switchMusique"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Musique"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:gravity="center|right"
+                android:orientation="vertical">
 
-            <Switch
-                android:id="@+id/switchLecture"
+                <Switch
+                    android:id="@+id/switchSport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sport"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <Switch
+                    android:id="@+id/switchMusique"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Musique"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <Switch
+                    android:id="@+id/switchLecture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lecture"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <Switch
+                    android:id="@+id/switch_ski"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ski"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
+
+            <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lecture"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <Switch
-                android:id="@+id/switch_ski"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ski"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:layout_weight="1" />
 
         </LinearLayout>
 
@@ -196,20 +213,21 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnSoumettre"
+                android:id="@+id/btnTelecharger"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Soumettre" />
+                android:text="Télécharger" />
 
             <Space
                 android:layout_width="20dp"
                 android:layout_height="match_parent" />
 
             <Button
-                android:id="@+id/btnTelecharger"
+                android:id="@+id/btnSoumettre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Télécharger" />
+                android:text="Soumettre" />
+
         </LinearLayout>
 
     </LinearLayout>
